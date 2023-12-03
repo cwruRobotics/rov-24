@@ -49,4 +49,5 @@ jobs:
           # Crazy one liner for install python dependencies
           AFTER_INSTALL_TARGET_DEPENDENCIES_EMBED: 'for d in /root/target_ws/src/rov-24/src/pi/*/ /root/target_ws/src/rov-24/src/surface/*/; do pip install -e "$d"; done'
           PYLINT_CHECK: true
+          # Matches .pylintrc
           PYLINT_ARGS: '--disable=duplicate-code,fixme --extension-pkg-whitelist=cv2,PyQt6'
