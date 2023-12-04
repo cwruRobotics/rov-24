@@ -1,4 +1,4 @@
-"""setup.py for this module."""
+"""setup.py for camera_streamer module."""
 import os
 from glob import glob
 

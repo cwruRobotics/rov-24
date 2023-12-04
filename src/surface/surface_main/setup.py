@@ -1,4 +1,4 @@
-"""setup.py for this module."""
+"""setup.py for the surface_main module."""
 import os
 from glob import glob
 

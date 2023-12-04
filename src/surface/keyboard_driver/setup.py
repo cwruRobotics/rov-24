@@ -1,4 +1,4 @@
-"""setup.py for this module."""
+"""setup.py for the keyboard module."""
 import os
 from glob import glob
 

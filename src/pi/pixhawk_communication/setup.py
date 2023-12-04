@@ -1,4 +1,4 @@
-"""setup.py for this module."""
+"""setup.py for pixhawk_communication module."""
 import os
 from glob import glob
 
