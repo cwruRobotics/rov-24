@@ -1,4 +1,4 @@
-"""setup.py for manipulators module"""
+"""setup.py for manipulators module."""
 import os
 from glob import glob
 
