@@ -1,3 +1,4 @@
+"""Test mypy on this module."""
 import os
 
 import pytest
