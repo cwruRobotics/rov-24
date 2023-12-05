@@ -1,4 +1,4 @@
-from keyboard_driver.keyboard_driver_node import KeyboardListenerNode
+from flight_control.keyboard_control_node import KeyboardListenerNode
 import rclpy
 import pytest
 

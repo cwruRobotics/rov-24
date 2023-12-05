@@ -29,7 +29,7 @@ git clone --recurse-submodules git@github.com:cwruRobotics/rov-24.git
 
 If you've never contributed to a git repository before, you might receive an error message saying you don't have access. In that case visit [this tutorial](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh) to set up SSH for local GitHub access.
 
-After cloning the code, we need to set up our IDE: VSCode. If you already have it, great. Otherwise follow [this](https://code.visualstudio.com/download) tutorial.
+After cloning the code, we need to set up our IDE: VSCode. If you already have it, great. Otherwise follow [this](https://code.visualstudio.com/download) tutorial. We recommend installing the mypy, flake8 and autoDocstring VSCode extensions. Our setting for autoDocstring are set to Numpy and auto docstring on new line.
 
 ### Linux
 
@@ -134,6 +134,8 @@ If you're working on package's `setup.py` or rov_msgs, you'll need to run `üèÉ‚
 
 If you want to run our unit tests use this command `colcon test --event-handlers=console_direct+`.
 
+In VSCode, press `F1` or `ctrl+shift+p` and enter `Tasks: Run Test Task` as another method to run the above command.
+
 It runs the tests and pipes the output to the terminal. To test pi_main make sure to type your password into the terminal after running the above command.
 
 If you install the flake8 and mypy extension they should help enforce the linters.
@@ -173,5 +175,26 @@ Any topics or services communicating across will be renamed first into the tethe
 Documentation will take place at 3 levels:
 
 - High Level - Overarching Design Document outlining our general structure and what goes where.
-- Device Level - ROS Docs as set out in the ROS2 standards.
-- Inline Level - Inline Documentation to the level that someone who has some basic code knowledge can understand what the code does.
+- Device Level - Following the markdown tempate in `doc` directory.
+- Inline Level - Using reST / Numpy Standard. To autogenerate in VSCode we use autoDocstring extension with the setting set to Numpy and auto docstring on new line. Below is an example of an inline function docstring.
+
+```python
+def __init__(self, srv_type: SrvType, topic: str, signal: pyqtBoundSignal,
+                 timeout: float = 1.0, expected_namespace: str = '/surface/gui'):
+        """
+        _summary_
+
+        Parameters
+        ----------
+        srv_type : SrvType
+            _description_
+        topic : str
+            _description_
+        signal : pyqtBoundSignal
+            _description_
+        timeout : float, optional
+            _description_, by default 1.0
+        expected_namespace : str, optional
+            _description_, by default '/surface/gui'
+        """
+```

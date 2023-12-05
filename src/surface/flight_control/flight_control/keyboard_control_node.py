@@ -1,15 +1,13 @@
-from array import array
 from typing import Optional
 
 import rclpy.utilities
 from mavros_msgs.msg import OverrideRCIn
+from rclpy.publisher import Publisher
 from pynput.keyboard import Key, KeyCode, Listener
 from rclpy.node import Node
 from rclpy.qos import qos_profile_system_default
-from task_selector.manual_control_node import (FORWARD_CHANNEL,
-                                               LATERAL_CHANNEL, PITCH_CHANNEL,
-                                               ROLL_CHANNEL, THROTTLE_CHANNEL,
-                                               YAW_CHANNEL)
+
+from flight_control.pixhawk_instruction import PixhawkInstruction
 
 # key bindings
 FORWARD = "w"
@@ -54,19 +52,16 @@ Key Bindings:
 [p] = Show this help"""
 
 
-# Range of values Pixhawk takes
-# In microseconds
-ZERO_SPEED: int = 1500
-RANGE_SPEED: int = 400
-
-
 class KeyboardListenerNode(Node):
     def __init__(self) -> None:
-        super().__init__("keyboard_listener_node", parameter_overrides=[])
+        super().__init__('keyboard_listener_node', parameter_overrides=[])
 
-        self.pub_status = self.create_publisher(
-            OverrideRCIn, "/mavros/rc/override", qos_profile_system_default
+        self.rc_pub: Publisher = self.create_publisher(
+            OverrideRCIn,
+            'mavros/rc/override',
+            qos_profile_system_default
         )
+
         self.get_logger().info(HELP_MSG)
         self.status = {
             FORWARD: False,
@@ -130,19 +125,16 @@ class KeyboardListenerNode(Node):
             raise exception
 
     def pub_rov_control(self) -> None:
-        msg = OverrideRCIn()
+        instruction = PixhawkInstruction(
+            pitch=self.status[PITCH_UP] - self.status[PITCH_DOWN],
+            roll=self.status[ROLL_LEFT] - self.status[ROLL_RIGHT],
+            vertical=self.status[UP] - self.status[DOWN],
+            forward=self.status[FORWARD] - self.status[BACKWARD],
+            lateral=self.status[LEFT] - self.status[RIGHT],
+            yaw=self.status[YAW_LEFT] - self.status[YAW_RIGHT]
+        )
 
-        channels = array('B', [1500, 1500, 1500, 1500, 1500, 1500])
-        channels[FORWARD_CHANNEL] += (self.status[FORWARD] - self.status[BACKWARD]) * 400
-        channels[LATERAL_CHANNEL] += (self.status[LEFT] - self.status[RIGHT]) * 400
-        channels[THROTTLE_CHANNEL] += (self.status[UP] - self.status[DOWN]) * 400
-        channels[ROLL_CHANNEL] += (self.status[ROLL_LEFT] - self.status[ROLL_RIGHT]) * 400
-        channels[PITCH_CHANNEL] += (self.status[PITCH_UP] - self.status[PITCH_DOWN]) * 400
-        channels[YAW_CHANNEL] += (self.status[YAW_LEFT] - self.status[YAW_RIGHT]) * 400
-
-        msg.channels = channels
-
-        self.pub_status.publish(msg)
+        self.rc_pub.publish(instruction.to_override_rc_in())
 
     def spin(self) -> None:
         with Listener(

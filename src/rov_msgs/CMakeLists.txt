@@ -26,10 +26,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/TaskRequest.srv"
-  "action/Example.action"
-  "action/BasicTask.action"
-  "msg/TaskFeedback.msg"
+  "srv/AutonomousFlight.srv"
   "msg/Manip.msg"
   "msg/CameraControllerSwitch.msg"
   DEPENDENCIES std_msgs

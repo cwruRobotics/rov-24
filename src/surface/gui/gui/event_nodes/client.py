@@ -15,7 +15,7 @@ class GUIEventClient(Node):
     # Set to None for no timeout limits on service requests
     # else set to float number of seconds to limit request spinning
     def __init__(self, srv_type: SrvType, topic: str, signal: pyqtBoundSignal,
-                 timeout: float = 1.0, expected_namespace: str = '/surface/gui'):
+                 timeout: float = 1.0, expected_namespace: str = '/surface/gui') -> None:
 
         # Name this node with a sanitized version of the topic
         self.name: str = f'client_{re.sub(r"[^a-zA-Z0-9_]", "_", topic)}'
