@@ -1,6 +1,7 @@
 from gui.app import App
 from gui.widgets.arm import Arm
 from gui.widgets.video_widget import SwitchableVideoWidget
+from gui.widgets.flood_visual import FloodVisual
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QHBoxLayout
 
@@ -22,6 +23,10 @@ class PilotApp(App):
                                                  "Depth Camera"],
                                                 "camera_switch")
         layout.addWidget(self.video_area, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        self.floodWidget: FloodVisual = FloodVisual()
+        layout.addWidget(self.floodWidget, alignment=Qt.AlignmentFlag.AlignRight
+                         | Qt.AlignmentFlag.AlignTop)
 
         self.arm: Arm = Arm()
         layout.addWidget(self.arm,
