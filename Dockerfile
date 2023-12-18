@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:iron-desktop-full
 
 RUN sudo apt-get update -y
 
@@ -32,7 +32,7 @@ RUN echo "$export PYTHONWARNINGS=ignore:::setuptools.command.install,ignore:::se
 # Installs ROS and python dependencies
 RUN . /root/rov-24/.vscode/install_dependencies.sh
 
-RUN . /opt/ros/humble/setup.sh \
+RUN . /opt/ros/iron/setup.sh \
     && PYTHONWARNINGS=ignore:::setuptools.command.install,ignore:::setuptools.command.easy_install,ignore:::pkg_resources; export PYTHONWARNINGS\
     && colcon build --symlink-install
 

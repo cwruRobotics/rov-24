@@ -9,7 +9,7 @@ PACKAGE_NAME = 'realsense'
 
 setup(
     name=PACKAGE_NAME,
-    version='1.0.0',
+    version='1.1.0',
     packages=[PACKAGE_NAME],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -19,7 +19,7 @@ setup(
         (os.path.join('share', PACKAGE_NAME, 'launch'),
          glob('launch/*launch.[pxy][yma]*'))
     ],
-    install_requires=['setuptools', 'flake8==5.0.4', 'mypy >= 1.7'],
+    install_requires=['setuptools', 'flake8==4.0.1', 'mypy >= 1.7'],
     zip_safe=True,
     maintainer='Michael Carlstrom',
     maintainer_email='rmc170@case.edu',

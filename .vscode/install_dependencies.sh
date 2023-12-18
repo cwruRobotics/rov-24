@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Update ROS dependencies
-. /opt/ros/humble/setup.sh && rosdep update
+. /opt/ros/iron/setup.sh && rosdep update
 sudo apt-get update -y
 
 # Installs ROS dependencies
-. /opt/ros/humble/setup.sh && rosdep install --from-paths src --ignore-src -r -y
+. /opt/ros/iron/setup.sh && rosdep install --from-paths src --ignore-src -r -y
 
 # Deletes ROS build directories
 rm -rf build install log

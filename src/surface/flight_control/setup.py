@@ -7,7 +7,7 @@ package_name = 'flight_control'
 
 setup(
     name=package_name,
-    version='1.0.0',
+    version='1.1.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -17,7 +17,7 @@ setup(
         (os.path.join('share', package_name, 'launch'),
          glob('launch/*launch.[pxy][yma]*'))
     ],
-    install_requires=['setuptools', 'flake8==5.0.4', 'mypy>=1.7', 'pynput'],
+    install_requires=['setuptools', 'flake8==4.0.1', 'mypy>=1.7', 'pynput'],
     zip_safe=True,
     maintainer='benjamin',
     maintainer_email='bwp18@case.edu',

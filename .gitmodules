@@ -1,3 +1,7 @@
 [submodule "src/surface/ros2_video_streamer"]
 	path = src/surface/ros2_video_streamer
 	url = git@github.com:cwruRobotics/ros2_video_streamer.git
+[submodule "src/pi/robot_upstart"]
+	path = src/pi/robot_upstart
+	url = git@github.com:clearpathrobotics/robot_upstart.git
+	branch = foxy-devel

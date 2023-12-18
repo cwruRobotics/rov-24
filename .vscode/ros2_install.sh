@@ -17,11 +17,11 @@ sudo apt-get update
 sudo apt-get upgrade -y
 
 # Install ROS2
-sudo apt-get install ros-humble-desktop -y
+sudo apt-get install ros-iron-desktop -y
 sudo apt-get upgrade -y
 
 # Add setup.bash to .bashrc only if it isn't already there
-ROS_LINE='source /opt/ros/humble/setup.bash'
+ROS_LINE='source /opt/ros/iron/setup.bash'
 if ! grep -qF "$ROS_LINE" ~/.bashrc ; 
     then echo "$ROS_LINE" >> ~/.bashrc ;
 fi
