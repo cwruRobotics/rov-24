@@ -1,5 +1,6 @@
 from gui.app import App
 from gui.widgets.logger import Logger
+from gui.widgets.debug_tab import DebugWidget
 from gui.widgets.seagrass import SeagrassWidget
 from gui.widgets.task_selector import TaskSelector
 from gui.widgets.timer import Timer
@@ -11,8 +12,6 @@ class OperatorApp(App):
         super().__init__('operator_gui_node')
 
         self.setWindowTitle('Operator GUI - CWRUbotix ROV 2024')
-
-        tabs = QTabWidget()
 
         # Main tab
         main_tab = QWidget()
@@ -32,7 +31,9 @@ class OperatorApp(App):
         root_layout: QGridLayout = QGridLayout()
         self.setLayout(root_layout)
 
+        tabs = QTabWidget()
         tabs.addTab(main_tab, "Main")
+        tabs.addTab(DebugWidget(), "Debug")
         tabs.addTab(SeagrassWidget(), "Seagrass")
 
         root_layout.addWidget(tabs)

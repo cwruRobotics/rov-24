@@ -1,10 +1,12 @@
 import atexit
 import signal
+import os
 
 import qdarktheme
 import rclpy.utilities
 from PyQt6.QtWidgets import QApplication, QWidget
 from rclpy.node import Node
+from ament_index_python.packages import get_package_share_directory
 
 
 class App(QWidget):
@@ -27,13 +29,19 @@ class App(QWidget):
         # Kills with Control + C
         signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-        if self.theme_param.get_parameter_value().string_value == "dark":
-            qdarktheme.setup_theme()
-        elif self.theme_param.get_parameter_value().string_value == "watermelon":
-            # UGLY But WORKS
-            self.app.setStyleSheet("QWidget { background-color: green; color: pink; }")
-        else:
-            qdarktheme.setup_theme("light")
+        # Apply theme
+        theme_param = self.theme_param.get_parameter_value().string_value
+        theme_path = os.path.join(get_package_share_directory("gui"),
+                                  "themes", theme_param + ".qss")
+
+        base_theme = "dark" if theme_param == "dark" else "light"
+        custom_styles = "\n"
+        if os.path.exists(theme_path):
+            with open(theme_path, encoding='utf-8') as theme_file:
+                custom_styles += theme_file.read()
+
+        qdarktheme.setup_theme(base_theme, additional_qss=custom_styles)
+
         # Delete node now that we've used it to get params
         self.node.destroy_node()
 

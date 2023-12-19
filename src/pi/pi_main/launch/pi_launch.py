@@ -48,6 +48,17 @@ def generate_launch_description() -> LaunchDescription:
         PythonLaunchDescriptionSource([
             os.path.join(
                 pixhawk_path, 'launch', 'mavros_launch.py'
+            ),
+        ])
+    )
+
+    # Heartbeat
+    heartbeat_path: str = get_package_share_directory('heartbeat')
+
+    heartbeat_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(
+                heartbeat_path, 'launch', 'heartbeat_launch.py'
             )
         ])
     )
@@ -70,6 +81,7 @@ def generate_launch_description() -> LaunchDescription:
             # manip_launch,
             pixhawk_launch,
             cam_launch,
+            heartbeat_launch,
             # realsense_launch
         ]
     )

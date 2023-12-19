@@ -1,0 +1,3 @@
+QWidget[customStyle="inactive"] { background-color: #4f4f4f; }
+QWidget[customStyle="on"] { background-color: #386e38; }
+QWidget[customStyle="off"] { background-color: #963832; }

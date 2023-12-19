@@ -3,20 +3,20 @@ from glob import glob
 
 from setuptools import setup
 
-package_name = 'rov_flir'
+PACKAGE_NAME = 'rov_flir'
 
 setup(
-    name=package_name,
+    name=PACKAGE_NAME,
     version='1.0.0',
-    packages=[package_name],
+    packages=[PACKAGE_NAME],
     data_files=[
         ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
+            ['resource/' + PACKAGE_NAME]),
+        ('share/' + PACKAGE_NAME, ['package.xml']),
         # Include all launch files.
-        (os.path.join('share', package_name, 'launch'),
+        (os.path.join('share', PACKAGE_NAME, 'launch'),
          glob('launch/*launch.[pxy][yma]*')),
-        (os.path.join('share', package_name, 'config'),
+        (os.path.join('share', PACKAGE_NAME, 'config'),
          glob('config/*'))
     ],
     install_requires=['setuptools'],

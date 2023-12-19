@@ -1,14 +1,14 @@
 import os
 from glob import glob
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
-PACKAGE_NAME = 'flight_control'
+PACKAGE_NAME = 'vehicle_manager'
 
 setup(
     name=PACKAGE_NAME,
     version='1.0.0',
-    packages=[PACKAGE_NAME],
+    packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + PACKAGE_NAME]),
@@ -17,18 +17,16 @@ setup(
         (os.path.join('share', PACKAGE_NAME, 'launch'),
          glob('launch/*launch.[pxy][yma]*'))
     ],
-    install_requires=['setuptools', 'flake8==5.0.4', 'mypy>=1.7', 'pynput'],
+    install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='benjamin',
-    maintainer_email='bwp18@case.edu',
-    description='Mate ROV sub movement controllers',
+    maintainer='noah',
+    maintainer_email='noah@mollerstuen.com',
+    description='Surface packaage to manage vehicle state updates',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'manual_control_node = flight_control.manual_control_node:main',
-            'keyboard_control_node = flight_control.keyboard_control_node:main',
-            'auto_docking_node = flight_control.auto_docking_node:main'
+            "connection_manager_node = vehicle_manager.connection_manager_node:main"
         ],
     },
 )
