@@ -11,6 +11,7 @@ def generate_launch_description() -> LaunchDescription:
 
     gui_path: str = get_package_share_directory('gui')
     controller_path: str = get_package_share_directory('ps5_controller')
+
     # Launches Gui
     gui_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([

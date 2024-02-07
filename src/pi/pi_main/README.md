@@ -88,7 +88,7 @@ ros2 run pi_main install
 ```
 
 ```bash
-sudo systemctl daemon-reload
+sudo systemctl daemon-reload && sudo systemctl start cwrubotix_pi
 ```
 
 These commands should be run in the `src` folder after a colcon build in the workspace folder.
@@ -131,6 +131,20 @@ To completely uninstall the `cwrubotix_pi` task:
 ros2 run robot_upstart uninstall cwrubotix_pi
 ```
 
+## Nodes
+
+### ip_publisher
+
+Publishes the current ip address of the network.
+
+#### Published Topics
+
+* **`/ip_address`** ([rov_msgs/msg/IPAddress])
+
+    The IP Address as a string.
+
 ## Launch files
 
-- **pi_launch.py**: launch the manipulators, camera streaming, and pixhawk packages
+* **pi_launch.py**: launch the manipulators, camera streaming, and pixhawk packages
+
+[rov_msgs/msg/IPAddress]: ../../rov_msgs/msg/IPAddress.msg

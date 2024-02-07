@@ -1,19 +1,19 @@
 {
     "name" : "ROV macOS",
-    "image": "ghcr.io/cwrurobotics/rov-24:main",
+    "image": "ghcr.io/cwrurobotics/rov-24:iron",
     "containerEnv": {
-        "DISPLAY": "${localEnv:DISPLAY}"
+        "DISPLAY": "unix:0"
     },
     "mounts": [
         "type=bind,source=/Users/${localEnv:USER}/.ssh,target=/root/.ssh,readonly",
-        // "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached"
     ],
     "workspaceFolder": "/root/rov-24",
     "customizations": {
         "vscode" : {
-            "extensions": ["ms-python.flake8", "ms-azuretools.vscode-docker", "streetsidesoftware.code-spell-checker"]
+            "extensions": ["ms-python.flake8", "ms-azuretools.vscode-docker",
+                           "streetsidesoftware.code-spell-checker", "ms-python.isort",
+                           "ms-python.mypy-type-checker"]
         }
     },
-    "privileged": true,
-    // "runArgs": ["--nest host"]
+    "privileged": true
 }

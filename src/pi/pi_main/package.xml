@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>pi_main</name>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <description>MATE ROV Pi Main</description>
   <maintainer email="bwp18@case.edu">Benjamin Poulin</maintainer>
   <license>Apache License 2.0</license>
@@ -12,7 +12,6 @@
   <test_depend>python3-pytest</test_depend>
 
   <exec_depend>ros2launch</exec_depend>
-  <build_depend>robot_upstart</build_depend>
 
   <export>
     <build_type>ament_python</build_type>

@@ -20,7 +20,7 @@ ros2 launch ps5-controller controller_launch.py
 
 * **`/joy`** ([sensor_msgs/Joy])
 
-    Outdated ROV movement instructions 
+    Information about the controller input.
 
 ## Subscribed Topics
 

@@ -29,6 +29,10 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/AutonomousFlight.srv"
   "msg/Manip.msg"
   "msg/CameraControllerSwitch.msg"
+  "msg/Flooding.msg"
+  "msg/IPAddress.msg"
+  "msg/VehicleState.msg"
+  "msg/Heartbeat.msg"
   DEPENDENCIES std_msgs
 )
 

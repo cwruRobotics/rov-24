@@ -16,12 +16,20 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-a
 sudo apt-get update
 sudo apt-get upgrade -y
 
+# Install dev tools like rosdep among others. This is ros-distro agnostic.
+# More info can be found here
+# https://discourse.ros.org/t/ros-developer-tools-now-in-binary-form/29802
+sudo apt-get install ros-dev-tools -y
+
+# Install pip
+sudo apt-get install python3-pip -y
+
 # Install ROS2
-sudo apt-get install ros-humble-ros-base -y
+sudo apt-get install ros-iron-ros-base -y
 sudo apt-get upgrade -y
 
 # Add setup.bash to .bashrc only if it isn't already there
-ROS_LINE='source /opt/ros/humble/setup.bash'
+ROS_LINE='source /opt/ros/iron/setup.bash'
 if ! grep -qF "$ROS_LINE" ~/.bashrc ; 
     then echo "$ROS_LINE" >> ~/.bashrc ;
 fi
@@ -36,15 +44,18 @@ fi
 source ~/.bashrc
 
 # Start rosdep
+sudo rosdep init
 rosdep update
 source ~/.bashrc
 
 # Install only Pi dependencies
 # Installs ROS dependencies
-source /opt/ros/humble/setup.sh && rosdep install --from-paths src/pi --ignore-src -r -y
+source /opt/ros/iron/setup.sh && rosdep install --from-paths src/pi --ignore-src -r -y
 
 # Crazy one liner for install python dependencies
 for d in src/pi/*/; do sudo pip install -e "$d"; done
+# Delete generated files
+sudo rm -rf $(find . | grep .egg-info)
 
 # Add setup.bash to .bashrc
 source "$(pwd)/.vscode/rov_setup.sh"

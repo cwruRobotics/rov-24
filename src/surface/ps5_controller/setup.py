@@ -8,7 +8,7 @@ PACKAGE_NAME = 'ps5_controller'
 
 setup(
     name=PACKAGE_NAME,
-    version='1.0.0',
+    version='1.1.0',
     packages=[PACKAGE_NAME],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -22,7 +22,7 @@ setup(
     zip_safe=True,
     maintainer='Michael Carlstrom',
     maintainer_email='rmc170@case.edu',
-    description='Biolerplate for calling standard joystick launch file.',
+    description='Boilerplate for calling standard joystick launch file.',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={},

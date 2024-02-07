@@ -64,6 +64,16 @@ Has two buttons for arming and disarming the pixhawk.
 
     Sends a request to arm or disarm the pixhawk. Receives a confirmation about the success of the arm or disarm.
 
+### Flood Warnng
+
+Shows whether the robot is flooding or not on the GUI
+
+#### Subscribed Topics
+
+* **`/tether/flooding`** ([rov_msgs/msg/Flooding])
+
+    A custom message for whether the robot is actively flooding
+
 ### Logger
 
 Reads ROS logging information and displays it on the gui.
@@ -110,6 +120,7 @@ A widget to display video. There are two subclasses of the video widget: `Pausea
 
     The video feed from the intel realsense.
 
+[rov_msgs/msg/Flooding]: ../../rov_msgs/msg/Flooding.msg
 [mavros_msgs/srv/CommandBool]: https://github.com/mavlink/mavros/blob/ros2/mavros_msgs/srv/CommandBool.srv
 [rcl_interfaces/msg/Log]: https://github.com/ros2/rcl_interfaces/blob/rolling/rcl_interfaces/msg/Log.msg
 [sensor_msgs/msg/Image]: <http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Image.html>

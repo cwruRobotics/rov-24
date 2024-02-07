@@ -1,10 +1,6 @@
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:iron-desktop-full
 
 RUN sudo apt-get update -y
-
-# Install missing libxcb-cursor0 xvfb for PyQt unit testing
-# https://pytest-qt.readthedocs.io/en/latest/troubleshooting.html
-RUN sudo apt-get install libxcb-cursor0 xvfb -y
 
 # Install pip
 RUN sudo apt-get install python3-pip -y
@@ -32,7 +28,7 @@ RUN echo "$export PYTHONWARNINGS=ignore:::setuptools.command.install,ignore:::se
 # Installs ROS and python dependencies
 RUN . /root/rov-24/.vscode/install_dependencies.sh
 
-RUN . /opt/ros/humble/setup.sh \
+RUN . /opt/ros/iron/setup.sh \
     && PYTHONWARNINGS=ignore:::setuptools.command.install,ignore:::setuptools.command.easy_install,ignore:::pkg_resources; export PYTHONWARNINGS\
     && colcon build --symlink-install
 

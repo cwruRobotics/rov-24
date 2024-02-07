@@ -44,10 +44,11 @@ def main() -> None:
     # Success Message
     print(process.stdout.decode())
 
-    install_path = os.path.join(pi_main_share, "..", "..")
+    install_path = os.path.join(pi_main_share, "..", "..", "..")
     workspace_path = os.path.join(install_path, "setup.bash")
-    cwrubotix_job = Job(name='cwrubotix_pi', rmw='rmw_cyclonedds_cpp',
-                        workspace_setup=workspace_path)
+    clean_path = os.path.normpath(workspace_path)
+
+    cwrubotix_job = Job(name='cwrubotix_pi', workspace_setup=clean_path)
     cwrubotix_job.symlink = True
     cwrubotix_job.uninstall()
     cwrubotix_job.add(package='pi_main', filename='launch/pi.launch.py')

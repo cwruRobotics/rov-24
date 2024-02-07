@@ -5,7 +5,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch.launch_description import LaunchDescription
 from launch.actions import GroupAction, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch_ros.actions import PushRosNamespace
+from launch_ros.actions import PushRosNamespace, Node
 
 
 def generate_launch_description() -> LaunchDescription:
@@ -31,15 +31,15 @@ def generate_launch_description() -> LaunchDescription:
     # )
 
     # Camera Streamer
-    cam_path: str = get_package_share_directory('camera_streamer')
+    # cam_path: str = get_package_share_directory('camera_streamer')
 
-    cam_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            os.path.join(
-                cam_path, 'launch', 'camera_launch.py'
-            )
-        ])
-    )
+    # cam_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([
+    #         os.path.join(
+    #             cam_path, 'launch', 'camera_launch.py'
+    #         )
+    #     ])
+    # )
 
     # Pixhawk Communication
     pixhawk_path: str = get_package_share_directory('pixhawk_communication')
@@ -48,6 +48,17 @@ def generate_launch_description() -> LaunchDescription:
         PythonLaunchDescriptionSource([
             os.path.join(
                 pixhawk_path, 'launch', 'mavros_launch.py'
+            ),
+        ])
+    )
+
+    # Heartbeat
+    heartbeat_path: str = get_package_share_directory('heartbeat')
+
+    heartbeat_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(
+                heartbeat_path, 'launch', 'heartbeat_launch.py'
             )
         ])
     )
@@ -64,12 +75,22 @@ def generate_launch_description() -> LaunchDescription:
     #     launch_arguments={'align_depth.enable': 'true'}.items()
     # )
 
+    # Launches ip_publisher node.
+    ip_publisher_node = Node(
+        package='pi_main',
+        executable='ip_publisher',
+        emulate_tty=True,
+        output='screen',
+        remappings=[('/pi/ip_address', '/tether/ip_address')]
+    )
+
     namespace_launch = GroupAction(
         actions=[
             PushRosNamespace(NAMESPACE),
             # manip_launch,
             pixhawk_launch,
-            cam_launch,
+            ip_publisher_node,
+            heartbeat_launch,
             # realsense_launch
         ]
     )

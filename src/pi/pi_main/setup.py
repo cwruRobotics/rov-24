@@ -9,7 +9,7 @@ PACKAGE_NAME = 'pi_main'
 
 setup(
     name=PACKAGE_NAME,
-    version='1.0.0',
+    version='1.1.0',
     packages=[PACKAGE_NAME],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -31,6 +31,7 @@ setup(
     entry_points={
         'console_scripts': [
             'install = pi_main.run_on_boot:main',
+            'ip_publisher = pi_main.ip_publisher:main'
         ],
     },
 )

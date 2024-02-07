@@ -51,7 +51,7 @@ To reopen after a build Go to File > Open Recent /stuff/rov-24 \[Dev Container]
 
 #### Bare Metal
 
-To run the install script use `F1` or `ctrl+shift+p` to open the command bar and use `Tasks: Runs Task`. Then from the Task selection choose `First Time Setup`. This will install ROS and all our dependencies.
+To run the install script use `F1` or `ctrl+shift+p` to open the command bar and use `Tasks: Runs Task`. Then from the Task selection choose `Setup Surface Environment`. This will install ROS and all our dependencies.
 
 ### Windows
 
@@ -89,7 +89,7 @@ After WSL has been installed follow [this](https://code.visualstudio.com/docs/re
 
 Then run the install script.
 
-To run the install script use `F1` or `ctrl+shift+p` to open the command bar and use `Tasks: Runs Task`. Then from the Task selection choose `First Time Setup`. This will install ROS and all our dependencies.
+To run the install script use `F1` or `ctrl+shift+p` to open the command bar and use `Tasks: Runs Task`. Then from the Task selection choose `Setup Surface Environment`. This will install ROS and all our dependencies.
 
 ### macOS
 
@@ -99,12 +99,33 @@ Start by installing docker from [here](https://www.docker.com/get-started/).
 
 Then install the Dev Containers VSCode extension.
 
+To get GUI support inside docker, first install [homebrew](https://brew.sh/).
+
+Then, from a terminal, run the following:
+```bash
+brew install socat
+brew install xquartz
+```
+
+Next, configure XQuartz with
+```bash
+open -a Xquartz
+```
+
+Make the settings look like this:
+
+![image](/doc/images/macos_xserver_settings.jpg)
+
 To open the container use `F1` or `ctrl+shift+p` to open the command bar and use `Tasks: Runs Task`. Then from the Task selection choose `Docker Rebuild`. This will build and run the docker container. Make sure to choose `ROV macOS` for which type to run.
 
 To reopen after a build Go to File > Open Recent /stuff/rov-24 \[Dev Container]
 
 <!-- Xserver testing on mac TODO ssh keys work -->
 <!-- https://gist.github.com/cschiewek/246a244ba23da8b9f0e7b11a68bf3285 -->
+
+## Upgrading Environment
+
+If you are upgrading to a newer ROS version make sure to remove `source /opt/ros/$PREVIOUS_ROS_DISTRO/setup.bash`. If you are using Docker you can simply build the new container and delete the old one.
 
 ## Test environment
 
