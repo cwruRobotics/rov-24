@@ -1,4 +1,5 @@
 """camera_streamer launch file."""
+
 from launch.launch_description import LaunchDescription
 from launch_ros.actions import Node
 
@@ -24,14 +25,18 @@ def generate_launch_description() -> LaunchDescription:
         executable="v4l2_camera_node",
         namespace="front_cam",
         parameters=[
-            {"video_device":
-             "/dev/v4l/by-id/usb-3.0_USB_Camera_3.0_USB_Camera-video-index0"},
+            {"video_device": "/dev/v4l/by-id/usb-3.0_USB_Camera_3.0_USB_Camera-video-index0"},
             {"image_size": [640, 480]},
-            {"time_per_frame": [1, 30]}
+            {"time_per_frame": [1, 30]},
         ],
-        remappings=[("/pi/front_cam/image_raw", "/tether/front_cam/image_raw")],
+        remappings=[
+            (
+                "/pi/front_cam/image_raw",
+                "/tether/front_cam/image_raw",
+            )
+        ],
         emulate_tty=True,
-        output='screen'
+        output="screen",
     )
 
     # USB 3.0 bottom
@@ -41,17 +46,27 @@ def generate_launch_description() -> LaunchDescription:
         executable="v4l2_camera_node",
         namespace="bottom_cam",
         parameters=[
-            {"video_device":
-             "/dev/v4l/by-id/usb-3.0_USB_Camera_3.0_USB_Camera_2020042501-video-index0"},
+            {
+                "video_device": (
+                    "/dev/v4l/by-id/usb-3.0_USB_Camera_3.0_USB_Camera" "_2020042501-video-index0"
+                )
+            },
             {"image_size": [640, 480]},
-            {"time_per_frame": [1, 30]}
+            {"time_per_frame": [1, 30]},
         ],
-        remappings=[("/pi/bottom_cam/image_raw", "/tether/bottom_cam/image_raw")],
+        remappings=[
+            (
+                "/pi/bottom_cam/image_raw",
+                "/tether/bottom_cam/image_raw",
+            )
+        ],
         emulate_tty=True,
-        output='screen'
+        output="screen",
     )
 
-    return LaunchDescription([
-        front_cam_node,
-        bottom_cam_node
-    ])
+    return LaunchDescription(
+        [
+            front_cam_node,
+            bottom_cam_node,
+        ]
+    )

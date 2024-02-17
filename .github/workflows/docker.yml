@@ -1,9 +1,12 @@
+---
 name: Create and publish a Docker image
+
+permissions: read-all
 
 # Configures this workflow to run every time a change is pushed to a branch in the branches array.
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
 
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
@@ -23,7 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           # Clone submodules as well
-          submodules: 'true'
+          submodules: "true"
           # Follow this https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
           # For help setting up in the future
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}

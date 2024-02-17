@@ -10,14 +10,19 @@ from rov_msgs.msg import IPAddress
 
 
 class IPPublisher(Node):
-
     def __init__(self) -> None:
         """Create IP Publisher node."""
-        super().__init__('ip_publisher')
-        self.publisher = self.create_publisher(IPAddress, 'ip_address',
-                                               qos_profile_system_default)
+        super().__init__("ip_publisher")
+        self.publisher = self.create_publisher(
+            IPAddress,
+            "ip_address",
+            qos_profile_system_default,
+        )
         timer_period = 0.5  # seconds
-        self.create_timer(timer_period, self.timer_callback)
+        self.create_timer(
+            timer_period,
+            self.timer_callback,
+        )
         self.failed_ethernet = False
         self.failed_wireless = False
 
@@ -26,7 +31,7 @@ class IPPublisher(Node):
         msg = IPAddress()
 
         try:
-            msg.ethernet_address = get_ip_address('eth0')
+            msg.ethernet_address = get_ip_address("eth0")
             self.failed_ethernet = False
         except OSError:
             if not self.failed_ethernet:
@@ -34,7 +39,7 @@ class IPPublisher(Node):
             self.failed_ethernet = True
 
         try:
-            msg.wireless_address = get_ip_address('wlan0')
+            msg.wireless_address = get_ip_address("wlan0")
             self.failed_wireless = False
         except OSError:
             if not self.failed_wireless:
@@ -45,13 +50,25 @@ class IPPublisher(Node):
 
 
 # https://stackoverflow.com/questions/24196932/how-can-i-get-the-ip-address-from-a-nic-network-interface-controller-in-python
-def get_ip_address(ifname: str = 'eth0') -> str:
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    return socket.inet_ntoa(fcntl.ioctl(
-        s.fileno(),
-        0x8915,  # SIOCGIFADDR
-        struct.pack('256s', ifname[:15].encode())
-    )[20:24])
+def get_ip_address(
+    ifname: str = "eth0",
+) -> str:
+    s = socket.socket(
+        socket.AF_INET,
+        socket.SOCK_DGRAM,
+    )
+    return socket.inet_ntoa(
+        fcntl.ioctl(
+            s.fileno(),
+            0x8915,
+            struct.pack(
+                "256s",
+                ifname[:15].encode(),
+            ),
+        )[  # SIOCGIFADDR
+            20:24
+        ]
+    )
 
 
 def main() -> None:
@@ -62,5 +79,5 @@ def main() -> None:
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

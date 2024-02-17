@@ -12,6 +12,8 @@ log/
 # Allows custom tasks
 .vscode/*
 !.vscode/tasks.json
+!.vscode/tasks.comment
+!.vscode/clean_files.sh
 !.vscode/easy_build.sh
 !.vscode/easy_all.sh
 !.vscode/ros2_install.sh

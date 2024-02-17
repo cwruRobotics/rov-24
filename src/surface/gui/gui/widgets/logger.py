@@ -1,18 +1,19 @@
 from gui.event_nodes.subscriber import GUIEventSubscriber
 from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QTextCursor
-from PyQt6.QtWidgets import (QCheckBox, QHBoxLayout, QTextEdit, QVBoxLayout,
-                             QWidget)
+from PyQt6.QtWidgets import QCheckBox, QHBoxLayout, QTextEdit, QVBoxLayout, QWidget
 from rcl_interfaces.msg import Log
 from rclpy.impl.logging_severity import LoggingSeverity
 
 # Dictionary linking LoggingSeverity to a QColor
-SEVERITY_LEVELS_DICT = {LoggingSeverity.UNSET: QColor(0, 0, 0),
-                        LoggingSeverity.DEBUG: QColor(50, 50, 50),
-                        LoggingSeverity.INFO: QColor(150, 150, 150),
-                        LoggingSeverity.WARN: QColor(150, 150, 0),
-                        LoggingSeverity.ERROR: QColor(255, 0, 0),
-                        LoggingSeverity.FATAL: QColor(168, 0, 0)}
+SEVERITY_LEVELS_DICT = {
+    LoggingSeverity.UNSET: QColor(0, 0, 0),
+    LoggingSeverity.DEBUG: QColor(50, 50, 50),
+    LoggingSeverity.INFO: QColor(150, 150, 150),
+    LoggingSeverity.WARN: QColor(150, 150, 0),
+    LoggingSeverity.ERROR: QColor(255, 0, 0),
+    LoggingSeverity.FATAL: QColor(168, 0, 0),
+}
 
 
 class Logger(QWidget):
@@ -47,7 +48,7 @@ class Logger(QWidget):
         self.terminal_font.setPointSize(11)
 
         self.print_log_signal.connect(self.print_log)
-        self.subscriber = GUIEventSubscriber(Log, '/rosout', self.print_log_signal)
+        self.subscriber = GUIEventSubscriber(Log, "/rosout", self.print_log_signal)
 
     @pyqtSlot(Log)
     def print_log(self, message: Log) -> None:
@@ -62,4 +63,4 @@ class Logger(QWidget):
         self.textbox.moveCursor(QTextCursor.MoveOperation.End)
         self.textbox.setCurrentFont(self.terminal_font)
         self.textbox.setTextColor(SEVERITY_LEVELS_DICT[severity_key])
-        self.textbox.insertPlainText(f'[{severity_key.name}]\t{message.msg}\n')
+        self.textbox.insertPlainText(f"[{severity_key.name}]\t{message.msg}\n")

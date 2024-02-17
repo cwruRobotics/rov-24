@@ -35,7 +35,7 @@ class TaskSelector(QWidget):
         # Add 'Task: ' label
         self.task_status: QLabel = QLabel()
         self.task_status.setFixedWidth(WIDTH)
-        self.task_status.setText('Auto Docking: Disabled')
+        self.task_status.setText("Auto Docking: Disabled")
 
         # Setup Grid
         layout.addWidget(self.task_status, 1, 1, 2, 2)
@@ -43,35 +43,35 @@ class TaskSelector(QWidget):
         layout.addWidget(self.stop_btn, 3, 1)
 
         self.scheduler_response_signal.connect(self.handle_scheduler_response)
-        self.task_controller = GUIEventClient(AutonomousFlight, 'auto_docker_control',
-                                              self.scheduler_response_signal)
+        self.task_controller = GUIEventClient(
+            AutonomousFlight, "auto_docker_control", self.scheduler_response_signal
+        )
 
     def start_btn_clicked(self) -> None:
         """Tell the back about the user selecting the start button."""
-        self.task_controller.get_logger().info(
-            'GUI changed task to: Auto Docking')
+        self.task_controller.get_logger().info("GUI changed task to: Auto Docking")
 
-        self.task_status.setText('Auto Docking: Enabled')
+        self.task_status.setText("Auto Docking: Enabled")
 
-        self.task_controller.send_request_async(
-            AutonomousFlight.Request(start=True))
+        self.task_controller.send_request_async(AutonomousFlight.Request(start=True))
 
     def stop_btn_clicked(self) -> None:
         """Tell the back about the user selecting the manual control button."""
-        self.task_controller.get_logger().info(
-            'GUI changed task to: Manual Control')
+        self.task_controller.get_logger().info("GUI changed task to: Manual Control")
 
-        self.task_status.setText('Auto Docking: Disabled')
+        self.task_status.setText("Auto Docking: Disabled")
 
-        self.task_controller.send_request_async(
-            AutonomousFlight.Request(start=False))
+        self.task_controller.send_request_async(AutonomousFlight.Request(start=False))
 
     @pyqtSlot(AutonomousFlight.Response)
-    def handle_scheduler_response(self, response: AutonomousFlight.Response) -> None:
+    def handle_scheduler_response(
+        self,
+        response: AutonomousFlight.Response,
+    ) -> None:
         """Handle scheduler response to request sent from gui_changed_task."""
-        msg = 'Auto docking is '
+        msg = "Auto docking is "
         if response.is_running:
-            msg += 'now running'
+            msg += "now running"
         else:
-            msg += 'no longer running'
+            msg += "no longer running"
         self.task_controller.get_logger().info(msg)

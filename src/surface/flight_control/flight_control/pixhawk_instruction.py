@@ -1,6 +1,7 @@
-from mavros_msgs.msg import OverrideRCIn
 from dataclasses import dataclass
 from typing import Callable
+
+from mavros_msgs.msg import OverrideRCIn
 
 # Brown out protection
 SPEED_THROTTLE: float = 0.85
@@ -38,7 +39,10 @@ class PixhawkInstruction:
     yaw: float = 0
     roll: float = 0
 
-    def apply(self, function_to_apply: Callable[[float], float]) -> None:
+    def apply(
+        self,
+        function_to_apply: Callable[[float], float],
+    ) -> None:
         """Apply a function to each dimension of this PixhawkInstruction."""
         self.forward = function_to_apply(self.forward)
         self.vertical = function_to_apply(self.vertical)
@@ -47,7 +51,9 @@ class PixhawkInstruction:
         self.yaw = function_to_apply(self.yaw)
         self.roll = function_to_apply(self.roll)
 
-    def to_override_rc_in(self) -> OverrideRCIn:
+    def to_override_rc_in(
+        self,
+    ) -> OverrideRCIn:
         """Convert this PixhawkInstruction to an rc_msg with the appropriate channels array."""
         rc_msg = OverrideRCIn()
 

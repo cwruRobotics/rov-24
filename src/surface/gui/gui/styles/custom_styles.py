@@ -1,8 +1,7 @@
-from PyQt6.QtWidgets import QWidget, QPushButton
+from PyQt6.QtWidgets import QPushButton, QWidget
 
 
 class IndicatorMixin(QWidget):
-
     _PROPERTY_NAME = "widgetState"
 
     # A component is running, enabled, or armed
@@ -20,19 +19,31 @@ class IndicatorMixin(QWidget):
     _NO_STATE = ""
 
     def set_on(self) -> None:
-        self.setProperty(IndicatorMixin._PROPERTY_NAME, IndicatorMixin._ON)
+        self.setProperty(
+            IndicatorMixin._PROPERTY_NAME,
+            IndicatorMixin._ON,
+        )
         self._update_style()
 
     def set_off(self) -> None:
-        self.setProperty(IndicatorMixin._PROPERTY_NAME, IndicatorMixin._OFF)
+        self.setProperty(
+            IndicatorMixin._PROPERTY_NAME,
+            IndicatorMixin._OFF,
+        )
         self._update_style()
 
     def set_inactive(self) -> None:
-        self.setProperty(IndicatorMixin._PROPERTY_NAME, IndicatorMixin._INACTIVE)
+        self.setProperty(
+            IndicatorMixin._PROPERTY_NAME,
+            IndicatorMixin._INACTIVE,
+        )
         self._update_style()
 
     def remove_state(self) -> None:
-        self.setProperty(IndicatorMixin._PROPERTY_NAME, IndicatorMixin._NO_STATE)
+        self.setProperty(
+            IndicatorMixin._PROPERTY_NAME,
+            IndicatorMixin._NO_STATE,
+        )
         self._update_style()
 
     def _update_style(self) -> None:

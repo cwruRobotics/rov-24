@@ -1,13 +1,12 @@
 from typing import Optional
 
 import rclpy.utilities
+from flight_control.pixhawk_instruction import PixhawkInstruction
 from mavros_msgs.msg import OverrideRCIn
-from rclpy.publisher import Publisher
 from pynput.keyboard import Key, KeyCode, Listener
 from rclpy.node import Node
+from rclpy.publisher import Publisher
 from rclpy.qos import qos_profile_system_default
-
-from flight_control.pixhawk_instruction import PixhawkInstruction
 
 # key bindings
 FORWARD = "w"
@@ -54,12 +53,15 @@ Key Bindings:
 
 class KeyboardListenerNode(Node):
     def __init__(self) -> None:
-        super().__init__('keyboard_listener_node', parameter_overrides=[])
+        super().__init__(
+            "keyboard_listener_node",
+            parameter_overrides=[],
+        )
 
         self.rc_pub: Publisher = self.create_publisher(
             OverrideRCIn,
-            'mavros/rc/override',
-            qos_profile_system_default
+            "mavros/rc/override",
+            qos_profile_system_default,
         )
 
         self.get_logger().info(HELP_MSG)
@@ -78,9 +80,12 @@ class KeyboardListenerNode(Node):
             YAW_RIGHT: False,
         }
 
-    def on_press(self, key: Optional[Key | KeyCode]) -> None:
+    def on_press(
+        self,
+        key: Optional[Key | KeyCode],
+    ) -> None:
         try:
-            key_name: str = ''
+            key_name: str = ""
             if isinstance(key, KeyCode):
                 key_name = key.char
                 if key_name is None:
@@ -101,9 +106,12 @@ class KeyboardListenerNode(Node):
             self.get_logger().error(str(exception))
             raise exception
 
-    def on_release(self, key: Optional[Key | KeyCode]) -> None:
+    def on_release(
+        self,
+        key: Optional[Key | KeyCode],
+    ) -> None:
         try:
-            key_name: str = ''
+            key_name: str = ""
             if isinstance(key, KeyCode):
                 key_name = key.char
                 if key_name is None:
@@ -131,17 +139,21 @@ class KeyboardListenerNode(Node):
             vertical=self.status[UP] - self.status[DOWN],
             forward=self.status[FORWARD] - self.status[BACKWARD],
             lateral=self.status[LEFT] - self.status[RIGHT],
-            yaw=self.status[YAW_LEFT] - self.status[YAW_RIGHT]
+            yaw=self.status[YAW_LEFT] - self.status[YAW_RIGHT],
         )
 
         self.rc_pub.publish(instruction.to_override_rc_in())
 
     def spin(self) -> None:
         with Listener(
-            on_press=self.on_press, on_release=self.on_release
+            on_press=self.on_press,
+            on_release=self.on_release,
         ) as listener:
             while rclpy.utilities.ok() and listener.running:
-                rclpy.spin_once(self, timeout_sec=0.1)
+                rclpy.spin_once(
+                    self,
+                    timeout_sec=0.1,
+                )
 
 
 def main() -> None:

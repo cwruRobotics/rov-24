@@ -10,12 +10,12 @@ class Timer(QWidget):
         self.seconds_left = 15 * 60
         self.running = False
 
-        self.label = QLabel('Label')
+        self.label = QLabel("Label")
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.label.setFont(QFont('Arial', 36))
+        self.label.setFont(QFont("Arial", 36))
 
-        self.toggle_btn = QPushButton('Start')
-        self.reset_btn = QPushButton('Reset')
+        self.toggle_btn = QPushButton("Start")
+        self.reset_btn = QPushButton("Reset")
 
         self.toggle_btn.setCheckable(True)
 

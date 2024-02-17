@@ -8,14 +8,13 @@ from rov_msgs.msg import VehicleState
 
 
 class HeartbeatWidget(QWidget):
-
     signal = pyqtSignal(VehicleState)
 
     def __init__(self) -> None:
         super().__init__()
 
         self.signal.connect(self.refresh)
-        self.subscription = GUIEventSubscriber(VehicleState, 'vehicle_state_event', self.signal)
+        self.subscription = GUIEventSubscriber(VehicleState, "vehicle_state_event", self.signal)
         # Create a latch variable
         self.warning_msg_latch: bool = False
 
@@ -24,7 +23,7 @@ class HeartbeatWidget(QWidget):
         font = QFont("Arial", 14)
 
         pi_status_layout = QHBoxLayout()
-        self.pi_indicator = QLabel('No Pi Status')
+        self.pi_indicator = QLabel("No Pi Status")
         self.pi_indicator.setFont(font)
         pi_status_layout.addWidget(self.pi_indicator)
         self.pi_indicator_circle = CircleIndicator(radius=10)
@@ -32,7 +31,7 @@ class HeartbeatWidget(QWidget):
         heartbeat_layout.addLayout(pi_status_layout)
 
         pixhawk_status_layout = QHBoxLayout()
-        self.pixhawk_indicator = QLabel('No Pixhawk Status')
+        self.pixhawk_indicator = QLabel("No Pixhawk Status")
         self.pixhawk_indicator.setFont(font)
         pixhawk_status_layout.addWidget(self.pixhawk_indicator)
         self.pixhawk_indicator_circle = CircleIndicator(radius=10)
@@ -44,15 +43,15 @@ class HeartbeatWidget(QWidget):
     @pyqtSlot(VehicleState)
     def refresh(self, msg: VehicleState) -> None:
         if msg.pi_connected:
-            self.pi_indicator.setText('Pi Connected')
+            self.pi_indicator.setText("Pi Connected")
             self.pi_indicator_circle.set_on()
         else:
-            self.pi_indicator.setText('Pi Disconnected')
+            self.pi_indicator.setText("Pi Disconnected")
             self.pi_indicator_circle.set_off()
 
         if msg.pixhawk_connected:
-            self.pixhawk_indicator.setText('Pixhawk Connected')
+            self.pixhawk_indicator.setText("Pixhawk Connected")
             self.pixhawk_indicator_circle.set_on()
         else:
-            self.pixhawk_indicator.setText('Pixhawk Disconnected')
+            self.pixhawk_indicator.setText("Pixhawk Disconnected")
             self.pixhawk_indicator_circle.set_off()

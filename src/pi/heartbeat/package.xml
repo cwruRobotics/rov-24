@@ -3,7 +3,7 @@
 <package format="3">
   <name>heartbeat</name>
   <version>1.0.0</version>
-  <description>Node to send perodic heartbeat messages to the surface</description>
+  <description>Node to send periodic heartbeat messages to the surface</description>
   <maintainer email="noah@mollerstuen.com">noah</maintainer>
   <license>Apache License 2.0</license>
 

@@ -61,7 +61,7 @@ nmcli connection up ethernet-eth0
 
     ![Screenshot of the control panel Network Connections page showing a wifi and an ethernet adapter](images/1-control-panel.png)
 
-2. Right click on your wifi adapter and click on "Properties".
+2. Right click on your Wi-Fi adapter and click on "Properties".
 
     ![Screenshot of the right click menu of a wifi adapter with "Properties" underlined](images/2-wifi-properties-button.png)
 

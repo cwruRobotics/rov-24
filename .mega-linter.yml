@@ -1,0 +1,44 @@
+---
+# Hadolint config files funky right now.
+DOCKERFILE_HADOLINT_ARGUMENTS: --ignore SC1091
+
+PYTHON_MYPY_CONFIG_FILE: pyproject.toml
+PYTHON_BLACK_CONFIG_FILE: pyproject.toml
+PYTHON_RUFF_CONFIG_FILE: pyproject.toml
+PYTHON_ISORT_CONFIG_FILE: pyproject.toml
+PYTHON_BANDIT_CONFIG_FILE: pyproject.toml
+
+# DO this heheheha because of https://github.com/PyCQA/flake8/issues/234
+# Where grown adults just complain and complain lol.
+PYTHON_FLAKE8_ARGUMENTS: --toml-config /github/workspace/pyproject.toml
+PYTHON_FLAKE8_PRE_COMMANDS:
+  - command: pip install --upgrade pip && pip install Flake8-pyproject
+    venv: flake8
+
+PYTHON_MYPY_PRE_COMMANDS:
+  - command: pip install --upgrade pip && pip install setuptools
+    venv: mypy
+    # Install these stub files
+  - command: git clone https://github.com/TilmanK/PyQt6-stubs
+    venv: mypy
+  - command: cd PyQt6-stubs/ && pip install .
+    venv: mypy
+  - command: pip install pytest ament_mypy ament-lint-flake8
+    venv: mypy
+
+DISABLE:
+  - COPYPASTE
+
+DISABLE_LINTERS:
+  - PYTHON_PYLINT
+  # MYPY is doing enough type checking
+  - PYTHON_PYRIGHT
+  # MYPY cannot do a good job without install all python dependencies so will disable here and use in ROS linter.
+  # Hopefully someone cooks here
+  # https://github.com/oxsecurity/megalinter/issues/3378
+  # - PYTHON_MYPY
+  # Seems broken rn
+  - JSON_JSONLINT
+  # workaround to solve the issue: fatal: detected dubious ownership in repository at '/github/workspace'
+  - REPOSITORY_DEVSKIM
+  - REPOSITORY_KICS

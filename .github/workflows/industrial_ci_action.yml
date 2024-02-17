@@ -1,7 +1,9 @@
 # This config uses industrial_ci (https://github.com/ros-industrial/industrial_ci.git).
 # For troubleshooting, see README (https://github.com/ros-industrial/industrial_ci/blob/master/README.rst)
-
+---
 name: Continuous Integration
+
+permissions: read-all
 
 on: # this determines when this workflow is run
   push:
@@ -38,17 +40,17 @@ jobs:
           key: ccache-${{ matrix.ROS_DISTRO }}-${{ matrix.ROS_REPO }}-${{github.run_id}}
           restore-keys: |
             ccache-${{ matrix.ROS_DISTRO }}-${{ matrix.ROS_REPO }}-
-  
-      - uses: 'ros-industrial/industrial_ci@master' # run industrial_ci
+
+      - uses: "ros-industrial/industrial_ci@master" # run industrial_ci
         env: # either pass all entries explicitly
           # Added back so testing without Dockerfile can be done
           ROS_DISTRO: ${{ matrix.ROS_DISTRO }}
-          DOCKER_IMAGE: ghcr.io/cwrurobotics/rov-24:iron    
+          DOCKER_IMAGE: ghcr.io/cwrurobotics/rov-24:iron
           ROS_REPO: ${{ matrix.ROS_REPO }}
           # Install missing libxcb-cursor0 xvfb for PyQt unit testing
           # https://pytest-qt.readthedocs.io/en/latest/troubleshooting.html
-          ADDITIONAL_DEBS: 'libxcb-cursor0 xvfb'
+          ADDITIONAL_DEBS: "libxcb-cursor0 xvfb"
           # Crazy one liner for install python dependencies
-          AFTER_INSTALL_TARGET_DEPENDENCIES_EMBED: 'pip install --upgrade pip && pip install /root/target_ws/src/rov-24 --user && rm -r /root/target_ws/src/rov-24/build'
+          AFTER_INSTALL_TARGET_DEPENDENCIES_EMBED: "pip install --upgrade pip && pip install /root/target_ws/src/rov-24 --user && rm -r /root/target_ws/src/rov-24/build"
           # Used for running our CI but don't necessarily want to run others failing unit tests (ej. robot_upstart)
-          UPSTREAM_WORKSPACE: 'github:clearpathrobotics/robot_upstart#foxy-devel'
+          UPSTREAM_WORKSPACE: "github:clearpathrobotics/robot_upstart#foxy-devel"

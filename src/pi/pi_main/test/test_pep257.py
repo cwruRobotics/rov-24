@@ -1,4 +1,5 @@
 """Test pep257 on this module."""
+
 # Copyright 2015 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ament_pep257.main import main
 import pytest
+from ament_pep257.main import main
 
 
 @pytest.mark.linter
 @pytest.mark.pep257
 def test_pep257() -> None:
     """Tests pep257 on this module."""
-    error_code = main(argv=['.', 'test'])
-    assert error_code == 0, 'Found code style errors / warnings'
+    error_code = main(argv=[".", "test"])
+    assert error_code == 0, "Found code style errors / warnings"

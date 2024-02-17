@@ -14,7 +14,7 @@ PI_TIMEOUT = 1  # Seconds
 
 
 @dataclass
-class VehicleState():
+class VehicleState:
     pi_connected: bool = False
     pixhawk_connected: bool = False
     armed: bool = False
@@ -22,27 +22,35 @@ class VehicleState():
 
 class VehicleManagerNode(Node):
     def __init__(self) -> None:
-        super().__init__("connection_manager_node", parameter_overrides=[])
+        super().__init__(
+            "connection_manager_node",
+            parameter_overrides=[],
+        )
 
         self.state_publisher = self.create_publisher(
-            VehicleStateMsg, "vehicle_state_event", qos_profile_system_default
+            VehicleStateMsg,
+            "vehicle_state_event",
+            qos_profile_system_default,
         )
 
         self.mavros_subscription = self.create_subscription(
             State,
-            'mavros/state',
+            "mavros/state",
             self.mavros_callback,
-            10
+            10,
         )
 
         self.mavros_subscription = self.create_subscription(
             Heartbeat,
-            'pi_heartbeat',
+            "pi_heartbeat",
             self.heartbeat_callback,
-            10
+            10,
         )
 
-        self.watchdog_timer = self.create_timer(1, self.watchdog_callback)
+        self.watchdog_timer = self.create_timer(
+            1,
+            self.watchdog_callback,
+        )
         self.last_heartbeat: float = 0  # Unix timestamp of the last mavros heartbeat from the pi
 
         self.last_subscriber_count = 0
@@ -55,14 +63,16 @@ class VehicleManagerNode(Node):
             VehicleStateMsg(
                 pi_connected=state.pi_connected,
                 pixhawk_connected=state.pixhawk_connected,
-                armed=state.armed
+                armed=state.armed,
             )
         )
 
     def mavros_callback(self, msg: State) -> None:
-        new_state = VehicleState(pi_connected=True,
-                                 pixhawk_connected=msg.connected,
-                                 armed=msg.armed)
+        new_state = VehicleState(
+            pi_connected=True,
+            pixhawk_connected=msg.connected,
+            armed=msg.armed,
+        )
 
         if new_state != self.vehicle_state:
             self.publish_state(new_state)
@@ -95,7 +105,8 @@ class VehicleManagerNode(Node):
             self.vehicle_state = VehicleState(
                 pi_connected=False,
                 pixhawk_connected=False,
-                armed=False)
+                armed=False,
+            )
             self.publish_state(self.vehicle_state)
             self.get_logger().warn("Pi disconnected")
 
@@ -115,7 +126,10 @@ def main() -> None:
     rclpy.init()
     vehicle_manager = VehicleManagerNode()
     executor = MultiThreadedExecutor()
-    rclpy.spin(vehicle_manager, executor=executor)
+    rclpy.spin(
+        vehicle_manager,
+        executor=executor,
+    )
 
 
 if __name__ == "__main__":

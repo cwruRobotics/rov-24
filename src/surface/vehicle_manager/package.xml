@@ -3,7 +3,7 @@
 <package format="3">
   <name>vehicle_manager</name>
   <version>1.0.0</version>
-  <description>Surface packaage to manage vehicle state updates</description>
+  <description>Surface package to manage vehicle state updates</description>
   <maintainer email="noah@mollerstuen.com">noah</maintainer>
   <license>Apache License 2.0</license>
 

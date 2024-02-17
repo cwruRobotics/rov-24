@@ -15,13 +15,12 @@ class Arm(QWidget):
     DISARM_REQUEST = CommandBool.Request(value=False)
     BUTTON_WIDTH = 120
     BUTTON_HEIGHT = 60
-    BUTTON_STYLESHEET = 'QPushButton { font-size: 20px; }'
+    BUTTON_STYLESHEET = "QPushButton { font-size: 20px; }"
 
     command_response_signal = pyqtSignal(CommandBool.Response)
     vehicle_state_signal = pyqtSignal(VehicleState)
 
     def __init__(self) -> None:
-
         super().__init__()
 
         layout = QHBoxLayout()
@@ -52,13 +51,16 @@ class Arm(QWidget):
 
         self.command_response_signal.connect(self.arm_status)
 
-        self.arm_client = GUIEventClient(CommandBool, "mavros/cmd/arming",
-                                         self.command_response_signal,
-                                         expected_namespace='/tether')
+        self.arm_client = GUIEventClient(
+            CommandBool,
+            "mavros/cmd/arming",
+            self.command_response_signal,
+            expected_namespace="/tether",
+        )
 
         self.mavros_subscription = GUIEventSubscriber(
             VehicleState,
-            'vehicle_state_event',
+            "vehicle_state_event",
             self.vehicle_state_signal,
         )
 

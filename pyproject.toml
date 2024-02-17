@@ -13,11 +13,14 @@ dependencies = [
     'opencv-python>=4.8.1',
     'numpy>=1.26',
     'pytest-qt',
-    'pytest-xvfb'
+    'pytest-xvfb',
+    'isort',
+    'black',
+    'checkov',
+    'ruff',
+    'pyright',
+    'bandit',
 ]
-
-[tool]
-line-length = 100
 
 [tool.mypy]
 strict = true
@@ -28,9 +31,29 @@ disallow_untyped_calls = false
 # Done because rclpy Node has type Any
 disallow_subclassing_any = false
 
+# Done to handle lots of duplicate file names like setup.py and test files. 
+explicit_package_bases = true
+exclude = "src/pi/robot_upstart/"
+
 [tool.pytest.ini_options]   
 qt_api = "pyqt6"
 
 [tool.pylintrc]
 disable = ["duplicate-code", "fixme"]
 extension-pkg-whitelist = ["PyQt6", "cv2"]
+
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.flake8]
+max-line-length = 100
+
+[tool.bandit.assert_used]
+skips = ['*_test.py', '*/test_*.py']

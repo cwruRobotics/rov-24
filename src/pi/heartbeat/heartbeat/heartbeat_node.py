@@ -10,13 +10,21 @@ PUBLISH_RATE = 2  # Hz
 
 class HeartbeatNode(Node):
     def __init__(self) -> None:
-        super().__init__("heartbeat_node", parameter_overrides=[])
-
-        self.publisher = self.create_publisher(
-            Heartbeat, "pi_heartbeat", qos_profile_system_default
+        super().__init__(
+            "heartbeat_node",
+            parameter_overrides=[],
         )
 
-        self.timer = self.create_timer(1 / PUBLISH_RATE, self.timer_callback)
+        self.publisher = self.create_publisher(
+            Heartbeat,
+            "pi_heartbeat",
+            qos_profile_system_default,
+        )
+
+        self.timer = self.create_timer(
+            1 / PUBLISH_RATE,
+            self.timer_callback,
+        )
 
     def timer_callback(self) -> None:
         self.publisher.publish(Heartbeat())
@@ -26,7 +34,10 @@ def main() -> None:
     rclpy.init()
     vehicle_manager = HeartbeatNode()
     executor = MultiThreadedExecutor()
-    rclpy.spin(vehicle_manager, executor=executor)
+    rclpy.spin(
+        vehicle_manager,
+        executor=executor,
+    )
 
 
 if __name__ == "__main__":

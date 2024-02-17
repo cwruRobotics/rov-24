@@ -1,13 +1,19 @@
 from typing import Callable, Optional
 
-from gui.widgets.video_widget import CameraDescription, PauseableVideoWidget, CameraType
+from gui.widgets.video_widget import CameraDescription, CameraType, PauseableVideoWidget
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QFrame, QGridLayout, QHBoxLayout, QLabel,
-                             QPushButton, QVBoxLayout, QWidget)
+from PyQt6.QtWidgets import (
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
 
 
 class SeagrassWidget(QWidget):
-
     BUTTON_WIDTH = 120
 
     def __init__(self) -> None:
@@ -33,15 +39,18 @@ class SeagrassWidget(QWidget):
         before_btns_layout.addWidget(set_all_green)
         before_btns_layout.addWidget(set_all_white)
 
-        before_layout.addWidget(QLabel("Before"), alignment=Qt.AlignmentFlag.AlignCenter)
+        before_layout.addWidget(
+            QLabel("Before"),
+            alignment=Qt.AlignmentFlag.AlignCenter,
+        )
         before_layout.addLayout(before_btns_layout)
         before_layout.addWidget(self.before_grid.frame)
 
         before_layout.addStretch()
 
-        bottom_cam_description = CameraDescription(CameraType.ETHERNET,
-                                                   'bottom_cam/image_raw',
-                                                   'Bottom Camera', 640, 370)
+        bottom_cam_description = CameraDescription(
+            CameraType.ETHERNET, "bottom_cam/image_raw", "Bottom Camera", 640, 370
+        )
         # Bottom cam
         self.bottom_cam = PauseableVideoWidget(bottom_cam_description)
 
@@ -55,7 +64,10 @@ class SeagrassWidget(QWidget):
 
         after_bttn_layout.addWidget(match_before)
 
-        after_layout.addWidget(QLabel("After"), alignment=Qt.AlignmentFlag.AlignCenter)
+        after_layout.addWidget(
+            QLabel("After"),
+            alignment=Qt.AlignmentFlag.AlignCenter,
+        )
         after_layout.addLayout(after_bttn_layout)
         after_layout.addWidget(self.after_grid.frame)
 
@@ -77,7 +89,11 @@ class SeagrassWidget(QWidget):
 
         # Add all sections to main layout
         root_layout.addLayout(before_layout, 1)
-        root_layout.addWidget(self.bottom_cam, 1, alignment=Qt.AlignmentFlag.AlignTop)
+        root_layout.addWidget(
+            self.bottom_cam,
+            1,
+            alignment=Qt.AlignmentFlag.AlignTop,
+        )
         root_layout.addLayout(after_layout, 1)
         root_layout.addWidget(result_widget, 2)
 
@@ -85,7 +101,9 @@ class SeagrassWidget(QWidget):
 
         self.show()
 
-    def update_result_text(self) -> None:
+    def update_result_text(
+        self,
+    ) -> None:
         before_num: int = self.before_grid.get_num_recovered()
         after_num: int = self.after_grid.get_num_recovered()
 
@@ -105,8 +123,11 @@ class SeagrassWidget(QWidget):
 
 
 class SeagrassGrid(QWidget):
-    def __init__(self, update_result_text: Callable[[], None],
-                 set_other_button: Optional[Callable[[int, bool], None]] = None) -> None:
+    def __init__(
+        self,
+        update_result_text: Callable[[], None],
+        set_other_button: Optional[Callable[[int, bool], None]] = None,
+    ) -> None:
         super().__init__()
 
         self.set_other_button: Optional[Callable[[int, bool], None]] = set_other_button
@@ -129,12 +150,19 @@ class SeagrassGrid(QWidget):
 
         for row in range(N):
             for col in range(N):
-                seagrass_button: SeagrassButton = SeagrassButton(button_id, 50,
-                                                                 update_result_text,
-                                                                 self.set_other_button)
+                seagrass_button: SeagrassButton = SeagrassButton(
+                    button_id,
+                    50,
+                    update_result_text,
+                    self.set_other_button,
+                )
                 self.all_buttons.append(seagrass_button)
 
-                grid_layout.addWidget(seagrass_button, row, col)
+                grid_layout.addWidget(
+                    seagrass_button,
+                    row,
+                    col,
+                )
 
                 button_id += 1
 
@@ -151,21 +179,35 @@ class SeagrassGrid(QWidget):
 
         return num_recovered
 
-    def update_connected_grid(self) -> None:
+    def update_connected_grid(
+        self,
+    ) -> None:
         if self.set_other_button is None:
             raise ValueError("self.set_other_button has been called on after grid")
 
         for button in self.all_buttons:
-            self.set_other_button(button.button_id, button.recovered)
+            self.set_other_button(
+                button.button_id,
+                button.recovered,
+            )
 
-    def set_button(self, button_id: int, recovered: bool) -> None:
+    def set_button(
+        self,
+        button_id: int,
+        recovered: bool,
+    ) -> None:
         button = self.all_buttons[button_id]
         button.set_color(recovered)
 
 
 class SeagrassButton(QPushButton):
-    def __init__(self, button_id: int, size: int, update_text: Callable[[], None],
-                 set_other_button: Optional[Callable[[int, bool], None]] = None) -> None:
+    def __init__(
+        self,
+        button_id: int,
+        size: int,
+        update_text: Callable[[], None],
+        set_other_button: Optional[Callable[[int, bool], None]] = None,
+    ) -> None:
         super(SeagrassButton, self).__init__()
 
         self.button_id: int = button_id
@@ -179,7 +221,9 @@ class SeagrassButton(QPushButton):
 
         self.clicked.connect(self.toggle_button_color)
 
-    def toggle_button_color(self) -> None:
+    def toggle_button_color(
+        self,
+    ) -> None:
         self.recovered = not self.recovered
 
         self.set_color(self.recovered)
@@ -196,6 +240,9 @@ class SeagrassButton(QPushButton):
 
         # Update other button
         if self.set_other_button is not None:
-            self.set_other_button(self.button_id, self.recovered)
+            self.set_other_button(
+                self.button_id,
+                self.recovered,
+            )
 
         self.update_text()

@@ -1,4 +1,5 @@
 """setup.py for the rov_gazebo module."""
+
 import os
 from glob import glob
 
@@ -11,13 +12,54 @@ setup(
     version="1.1.0",
     packages=[PACKAGE_NAME],
     data_files=[
-        ("share/ament_index/resource_index/packages", ["resource/" + PACKAGE_NAME]),
-        ("share/" + PACKAGE_NAME, ["package.xml"]),
-        (os.path.join("share", PACKAGE_NAME, "launch"), glob("launch/*.py")),
-        (os.path.join("share", PACKAGE_NAME, "description"), glob("description/*")),
-        (os.path.join("share", PACKAGE_NAME, "config"), glob("config/*")),
-        (os.path.join("share", PACKAGE_NAME, "worlds"), glob("worlds/*")),
-        (os.path.join("share", PACKAGE_NAME, "meshes"), glob("meshes/*")),
+        (
+            "share/ament_index/resource_index/packages",
+            ["resource/" + PACKAGE_NAME],
+        ),
+        (
+            "share/" + PACKAGE_NAME,
+            ["package.xml"],
+        ),
+        (
+            os.path.join(
+                "share",
+                PACKAGE_NAME,
+                "launch",
+            ),
+            glob("launch/*.py"),
+        ),
+        (
+            os.path.join(
+                "share",
+                PACKAGE_NAME,
+                "description",
+            ),
+            glob("description/*"),
+        ),
+        (
+            os.path.join(
+                "share",
+                PACKAGE_NAME,
+                "config",
+            ),
+            glob("config/*"),
+        ),
+        (
+            os.path.join(
+                "share",
+                PACKAGE_NAME,
+                "worlds",
+            ),
+            glob("worlds/*"),
+        ),
+        (
+            os.path.join(
+                "share",
+                PACKAGE_NAME,
+                "meshes",
+            ),
+            glob("meshes/*"),
+        ),
     ],
     install_requires=["setuptools"],
     zip_safe=True,
