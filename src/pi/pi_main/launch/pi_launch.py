@@ -75,6 +75,17 @@ def generate_launch_description() -> LaunchDescription:
         ])
     )
 
+    flood_sensors_path: str = get_package_share_directory('flood_detection')
+
+    # Launches Realsense
+    flood_detection_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(
+                flood_sensors_path, 'launch', 'flood_detection_launch.py'
+            )
+        ])
+    )
+
     # Launches ip_publisher node.
     ip_publisher_node = Node(
         package='pi_main',
@@ -92,7 +103,8 @@ def generate_launch_description() -> LaunchDescription:
             # cam_launch,
             realsense_launch,
             ip_publisher_node,
-            heartbeat_launch
+            heartbeat_launch,
+            flood_detection_launch
         ]
     )
 
