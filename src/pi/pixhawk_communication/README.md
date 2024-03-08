@@ -16,11 +16,15 @@ To set up a Pixhawk USB port use [this](https://docs.px4.io/main/en/companion_co
 
 ## Installation
 
+Make sure you have your udev rules set up according to pi_main/README.md.
+
 Install geographiclib dependencies.
 
 ```bash
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/install_geographiclib_datasets.sh)" root
 ```
+
+If you get an "Inappropriate ioctl for device" error, try restarting while the Pixhawk is plugged in to get the udev rules to apply.
 
 ## Usage
 

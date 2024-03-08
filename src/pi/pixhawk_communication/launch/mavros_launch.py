@@ -26,13 +26,17 @@ def generate_launch_description() -> LaunchDescription:
             {"system_id": 255},
             # plugin_allowlist allows which mavros nodes get launched. The default is all of them.
             {"plugin_allowlist": ["sys_status", "rc_io", "command", "param"]},
-            {"fcu_url": "/dev/ttyPixhawk"}
+            # Slower Baud Rate seems to improve reliability.
+            {"fcu_url": "/dev/ttyPixhawk:57600"}
         ],
         remappings=[
             ('/pi/mavros/state', '/tether/mavros/state'),
             ('/pi/mavros/rc/override', '/tether/mavros/rc/override'),
             ('/pi/mavros/cmd/arming', '/tether/mavros/cmd/arming'),
             ('/pi/mavros/cmd/command', '/tether/mavros/cmd/command'),
+            ("/pi/mavros/param/pull", "/tether/mavros/param/pull"),
+            ("/pi/mavros/param/set_parameters", "/tether/mavros/param/set_parameters"),
+            ("/pi/mavros/param/get_parameters", "/tether/mavros/param/get_parameters"),
         ]
     )
 

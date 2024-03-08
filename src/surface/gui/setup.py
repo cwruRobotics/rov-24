@@ -23,6 +23,8 @@ setup(
         # Include all style files.
         (os.path.join('share', PACKAGE_NAME, 'styles'),
          glob('gui/styles/*.qss')),
+        (os.path.join('share', PACKAGE_NAME, 'images'),
+         glob('images/*')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

@@ -107,9 +107,17 @@ These commands should be run in the `src` folder after a colcon build in the wor
 
 WARNING: Python packages must be installed with sudo for startup code to see them.
 
+You might need to install geographiclib, as described in pixhawk_communication/README.md.
+
 ### Adding udev Rules
 
 This should automatically be done by the prior command `ros2 run pi_main install`. If not, copy all the .rules files from `udev_rules` in this package to the `/etc/udev/rules.d` directory to use USB devices properly.
+
+To reload udev without reboot use the following command.
+
+```bash
+sudo udevadm control --reload-rules && sudo  udevadm trigger
+```
 
 ## Usage
 
