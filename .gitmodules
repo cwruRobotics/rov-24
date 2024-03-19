@@ -12,3 +12,6 @@
 [submodule "src/util/ament_pep257"]
 	path = src/util/ament_pep257
 	url = git@github.com:InvincibleRMC/ament_pep257.git
+[submodule "src/rov_msgs/rosidl_python"]
+	path = src/rov_msgs/rosidl_python
+	url = git@github.com:InvincibleRMC/rosidl_python.git

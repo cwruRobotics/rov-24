@@ -2,7 +2,7 @@ from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QGridLayout, QLabel, QPushButton, QWidget
 from rov_msgs.msg import MissionTimerTick
-from rov_msgs.srv import MissionTimerSet
+from rov_msgs.srv import MissionTimerSet, MissionTimerSet_Request, MissionTimerSet_Response
 from rclpy.duration import Duration
 
 from gui.gui_nodes.event_nodes.client import GUIEventClient
@@ -67,7 +67,7 @@ class TimerDisplay(QLabel):
 class InteractiveTimer(QWidget):
     """An interactive Qt interface for a ROS timer node."""
 
-    set_timer_response_signal: pyqtSignal = pyqtSignal(MissionTimerSet.Response)
+    set_timer_response_signal: pyqtSignal = pyqtSignal(MissionTimerSet_Response)
 
     def __init__(self) -> None:
         """
@@ -123,7 +123,7 @@ class InteractiveTimer(QWidget):
     def toggle_timer(self) -> None:
         """If the ROS timer is running, pause it. If it's paused, resume it."""
         self.set_timer_client.send_request_async(
-            MissionTimerSet.Request(
+            MissionTimerSet_Request(
                 set_running=True,
                 running=not self.timer.running
             )
@@ -132,7 +132,7 @@ class InteractiveTimer(QWidget):
     def reset_timer(self) -> None:
         """Stop the timer and reset its remaining duration to the default value."""
         self.set_timer_client.send_request_async(
-            MissionTimerSet.Request(
+            MissionTimerSet_Request(
                 set_time=True,
                 time=Duration(seconds=RESET_SECONDS).to_msg(),
                 set_running=True,
@@ -140,14 +140,14 @@ class InteractiveTimer(QWidget):
             )
         )
 
-    @pyqtSlot(MissionTimerSet.Response)
-    def set_time_response_callback(self, res: MissionTimerSet.Response) -> None:
+    @pyqtSlot(MissionTimerSet_Response)
+    def set_time_response_callback(self, res: MissionTimerSet_Response) -> None:
         """
         Handle a response to a service call made by this object.
 
         Parameters
         ----------
-        res : MissionTimerSet.Response
+        res : MissionTimerSet_Response
             The ROS response sent by the timer node.
         """
         if not res.success:

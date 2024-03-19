@@ -5,9 +5,11 @@ version = "1.1.0"
 
 dependencies = [
     'setuptools',
+    'types-setuptools',
     'flake8==7.0.0',
     'mypy >= 1.7',
     'pynput',
+    'types-pynput',
     'pyqt6',
     'pyqtdarktheme',
     'opencv-python>=4.8.1',
@@ -16,9 +18,6 @@ dependencies = [
     'pytest-xvfb',
     'Pyside2'  # can be removed when ament_pep257 is gone
 ]
-
-[tool]
-line-length = 100
 
 [tool.pydocstyle]
 convention = "numpy"
@@ -35,12 +34,26 @@ add-ignore=[
 
 [tool.mypy]
 strict = true
+warn_unused_configs = true
+allow_untyped_calls = true
+[[tool.mypy.overrides]]
 # Done becuase tons of python packages are missing stubs or py.typed markers
+module = ["ament_mypy.*",
+          "ament_pep257.*",
+          "ament_flake8.*",
+          "ament_index_python.*",
+          "sensor_msgs.*",
+          "mavros_msgs.*",
+          "launch_ros.*",
+          "launch.*",
+          "robot_upstart.*",
+          "builtin_interfaces.*",
+          "rcl_interfaces.*",
+          "qdarktheme.*",
+          "cv_bridge.*",
+          "pytestqt.*"
+]
 ignore_missing_imports = true
-# Done because some calls insides rclpy are not typed
-disallow_untyped_calls = false
-# Done because rclpy Node has type Any
-disallow_subclassing_any = false
 
 [tool.pytest.ini_options]   
 qt_api = "pyqt6"

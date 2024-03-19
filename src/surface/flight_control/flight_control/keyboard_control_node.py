@@ -1,13 +1,12 @@
 from typing import Optional
 
 import rclpy.utilities
+from flight_control.pixhawk_instruction import PixhawkInstruction
 from mavros_msgs.msg import OverrideRCIn
-from rclpy.publisher import Publisher
 from pynput.keyboard import Key, KeyCode, Listener
 from rclpy.node import Node
+from rclpy.publisher import Publisher
 from rclpy.qos import qos_profile_system_default
-
-from flight_control.pixhawk_instruction import PixhawkInstruction
 
 # key bindings
 FORWARD = "w"
@@ -80,7 +79,7 @@ class KeyboardListenerNode(Node):
 
     def on_press(self, key: Optional[Key | KeyCode]) -> None:
         try:
-            key_name: str = ''
+            key_name: Optional[str] = ''
             if isinstance(key, KeyCode):
                 key_name = key.char
                 if key_name is None:
@@ -103,7 +102,7 @@ class KeyboardListenerNode(Node):
 
     def on_release(self, key: Optional[Key | KeyCode]) -> None:
         try:
-            key_name: str = ''
+            key_name: Optional[str] = ''
             if isinstance(key, KeyCode):
                 key_name = key.char
                 if key_name is None:

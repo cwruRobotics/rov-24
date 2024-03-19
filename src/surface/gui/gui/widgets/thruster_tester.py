@@ -2,7 +2,7 @@ import time
 from threading import Thread
 
 from gui.gui_nodes.event_nodes.client import GUIEventClient
-from mavros_msgs.srv import CommandLong
+from mavros_msgs.srv import CommandLong, CommandLong_Request, CommandLong_Response
 from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import (QGridLayout, QLabel, QLineEdit, QPushButton,
@@ -16,7 +16,7 @@ class ThrusterTester(QWidget):
     TEST_THROTTLE: float = 0.50  # 50%
     MOTOR_COUNT = 8
 
-    command_response_signal: pyqtSignal = pyqtSignal(CommandLong.Response)
+    command_response_signal: pyqtSignal = pyqtSignal(CommandLong_Response)
 
     def __init__(self) -> None:
         super().__init__()
@@ -92,7 +92,7 @@ class ThrusterTester(QWidget):
         start_time = time.time()
         while time.time() - start_time < duration:
             self.cmd_client.send_request_async(
-                CommandLong.Request(
+                CommandLong_Request(
                     command=209,  # MAV_CMD_DO_MOTOR_TEST
                     param1=float(motor_index),  # Motor number
                     param2=0.0,  # MOTOR_TEST_THROTTLE_PERCENT
@@ -120,6 +120,6 @@ class ThrusterTester(QWidget):
         # https://ardupilot.org/copter/docs/parameters.html#servo10-parameters
         pass
 
-    @pyqtSlot(CommandLong.Response)
-    def command_response_handler(self, res: CommandLong.Response) -> None:
+    @pyqtSlot(CommandLong_Response)
+    def command_response_handler(self, res: CommandLong_Response) -> None:
         self.cmd_client.get_logger().debug(f"Test response: {res.success}, {res.result}")

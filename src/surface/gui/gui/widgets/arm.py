@@ -1,7 +1,7 @@
 from gui.gui_nodes.event_nodes.client import GUIEventClient
 from gui.gui_nodes.event_nodes.subscriber import GUIEventSubscriber
 from gui.styles.custom_styles import ButtonIndicator
-from mavros_msgs.srv import CommandBool
+from mavros_msgs.srv import CommandBool, CommandBool_Request, CommandBool_Response
 from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import QHBoxLayout, QWidget
 
@@ -11,13 +11,13 @@ from rov_msgs.msg import VehicleState
 class Arm(QWidget):
     """Arm widget for sending Arm Commands."""
 
-    ARM_REQUEST = CommandBool.Request(value=True)
-    DISARM_REQUEST = CommandBool.Request(value=False)
+    ARM_REQUEST = CommandBool_Request(value=True)
+    DISARM_REQUEST = CommandBool_Request(value=False)
     BUTTON_WIDTH = 120
     BUTTON_HEIGHT = 60
     BUTTON_STYLESHEET = 'QPushButton { font-size: 20px; }'
 
-    command_response_signal = pyqtSignal(CommandBool.Response)
+    command_response_signal = pyqtSignal(CommandBool_Response)
     vehicle_state_signal = pyqtSignal(VehicleState)
 
     def __init__(self) -> None:
@@ -70,8 +70,8 @@ class Arm(QWidget):
     def disarm_clicked(self) -> None:
         self.arm_client.send_request_async(self.DISARM_REQUEST)
 
-    @pyqtSlot(CommandBool.Response)
-    def arm_status(self, res: CommandBool.Response) -> None:
+    @pyqtSlot(CommandBool_Response)
+    def arm_status(self, res: CommandBool_Response) -> None:
         if not res:
             self.arm_client.get_logger().warn("Failed to arm or disarm.")
 

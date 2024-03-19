@@ -6,7 +6,7 @@ from rclpy.qos import qos_profile_system_default
 from rclpy.time import Time
 from rclpy.duration import Duration
 from rov_msgs.msg import MissionTimerTick
-from rov_msgs.srv import MissionTimerSet
+from rov_msgs.srv import MissionTimerSet, MissionTimerSet_Request, MissionTimerSet_Response
 
 
 PUBLISH_RATE = 10  # Hz
@@ -71,21 +71,21 @@ class TimerNode(Node):
         self.do_tick()
         self.publish_tick_message()
 
-    def set_time_callback(self, request: MissionTimerSet.Request,
-                          response: MissionTimerSet.Response) -> MissionTimerSet.Response:
+    def set_time_callback(self, request: MissionTimerSet_Request,
+                          response: MissionTimerSet_Response) -> MissionTimerSet_Response:
         """
         Handle a request to start, stop, or reset the timer.
 
         Parameters
         ----------
-        request : MissionTimerSet.Request
+        request : MissionTimerSet_Request
             The ROS request sent by the caller of the service; describes the desired action.
-        response : MissionTimerSet.Response
+        response : MissionTimerSet_Response
             The default ROS response to be returned to the caller.
 
         Returns
         -------
-        MissionTimerSet.Response
+        MissionTimerSet_Response
             The ROS response to be returned to the caller.
         """
         self.do_tick()

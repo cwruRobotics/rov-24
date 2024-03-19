@@ -1,4 +1,4 @@
-from rov_msgs.srv import AutonomousFlight
+from rov_msgs.srv import AutonomousFlight, AutonomousFlight_Request, AutonomousFlight_Response
 
 import rclpy
 from rclpy.executors import MultiThreadedExecutor
@@ -18,8 +18,8 @@ class AutoDocker(Node):
 
         # TODO: Add cam frame subscriber here to act as control loop for auto docking
 
-    def task_control_callback(self, request: AutonomousFlight.Request,
-                              response: AutonomousFlight.Response) -> AutonomousFlight.Response:
+    def task_control_callback(self, request: AutonomousFlight_Request,
+                              response: AutonomousFlight_Response) -> AutonomousFlight_Response:
         self.running = request.start
         response.is_running = self.running
 

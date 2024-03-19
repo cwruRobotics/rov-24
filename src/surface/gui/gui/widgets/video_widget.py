@@ -2,7 +2,7 @@ from typing import NamedTuple, Optional
 
 import cv2
 from cv2.typing import MatLike
-from cv_bridge import CvBridge
+from cv_bridge.core import CvBridge
 from gui.gui_nodes.event_nodes.subscriber import GUIEventSubscriber
 from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QImage, QPixmap

@@ -18,6 +18,7 @@
   <depend>action_msgs</depend>
   <depend>std_msgs</depend>
 
+  <buildtool_depend>rosidl_generator_py</buildtool_depend>
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
 
   <exec_depend>rosidl_default_runtime</exec_depend>

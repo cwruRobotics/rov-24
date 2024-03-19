@@ -2,7 +2,7 @@ from gui.gui_nodes.event_nodes.client import GUIEventClient
 from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import QGridLayout, QLabel, QPushButton, QWidget
 
-from rov_msgs.srv import AutonomousFlight
+from rov_msgs.srv import AutonomousFlight, AutonomousFlight_Request, AutonomousFlight_Response
 
 WIDTH = 200
 
@@ -12,7 +12,7 @@ class TaskSelector(QWidget):
 
     # Declare signals with "object" params b/c we don't have access to
     # the ROS service object TaskRequest_Response
-    scheduler_response_signal: pyqtSignal = pyqtSignal(AutonomousFlight.Response)
+    scheduler_response_signal: pyqtSignal = pyqtSignal(AutonomousFlight_Response)
 
     def __init__(self) -> None:
         super().__init__()
@@ -54,7 +54,7 @@ class TaskSelector(QWidget):
         self.task_status.setText('Auto Docking: Enabled')
 
         self.task_controller.send_request_async(
-            AutonomousFlight.Request(start=True))
+            AutonomousFlight_Request(start=True))
 
     def stop_btn_clicked(self) -> None:
         """Tell the back about the user selecting the manual control button."""
@@ -64,10 +64,10 @@ class TaskSelector(QWidget):
         self.task_status.setText('Auto Docking: Disabled')
 
         self.task_controller.send_request_async(
-            AutonomousFlight.Request(start=False))
+            AutonomousFlight_Request(start=False))
 
-    @pyqtSlot(AutonomousFlight.Response)
-    def handle_scheduler_response(self, response: AutonomousFlight.Response) -> None:
+    @pyqtSlot(AutonomousFlight_Response)
+    def handle_scheduler_response(self, response: AutonomousFlight_Response) -> None:
         """Handle scheduler response to request sent from gui_changed_task."""
         msg = 'Auto docking is '
         if response.is_running:
