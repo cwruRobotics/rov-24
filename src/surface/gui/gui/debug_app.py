@@ -1,24 +1,23 @@
 from gui.app import App
 from gui.widgets.arm import Arm
-from gui.widgets.timer import TimerDisplay
 from gui.widgets.flood_warning import FloodWarning
+from gui.widgets.timer import TimerDisplay
 from gui.widgets.video_widget import (CameraDescription, CameraType,
                                       SwitchableVideoWidget, VideoWidget)
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout
 
 
-class PilotApp(App):
+class DebugApp(App):
     def __init__(self) -> None:
-        super().__init__('pilot_gui_node')
+        super().__init__('debug_gui_node')
 
-        self.setWindowTitle('Pilot GUI - CWRUbotix ROV 2024')
+        self.setWindowTitle('Debug GUI - CWRUbotix ROV 2024')
 
         main_layout = QVBoxLayout()
+        video_layout = QHBoxLayout()
         self.setLayout(main_layout)
 
-        # TODO Look into QStackedLayout for possibly switching between
-        # 1 big camera feed and 2 smaller ones
         front_cam_description = CameraDescription(CameraType.ETHERNET,
                                                   'front_cam/image_raw',
                                                   'Front Camera')
@@ -35,8 +34,10 @@ class PilotApp(App):
         video_area = SwitchableVideoWidget([bottom_cam_description, depth_cam_description],
                                            "camera_switch")
 
-        main_layout.addWidget(main_video, alignment=Qt.AlignmentFlag.AlignHCenter)
-        main_layout.addWidget(video_area, alignment=Qt.AlignmentFlag.AlignHCenter)
+        video_layout.addWidget(main_video, alignment=Qt.AlignmentFlag.AlignHCenter)
+        video_layout.addWidget(video_area, alignment=Qt.AlignmentFlag.AlignHCenter)
+
+        main_layout.addLayout(video_layout)
 
         bottom_screen_layout = QHBoxLayout()
 
@@ -54,5 +55,5 @@ class PilotApp(App):
         main_layout.addLayout(bottom_screen_layout)
 
 
-def run_gui_pilot() -> None:
-    PilotApp().run_gui()
+def run_gui_debug() -> None:
+    DebugApp().run_gui()

@@ -26,13 +26,15 @@ ros2 launch gui pilot_launch.py
 
 ## Launch files
 
-* **operator_launch.py:** This launches the operator gui.
+* **operator_launch.py:** Launches the operator gui, ex. `ros2 launch gui operator_launch.py theme:=watermelon`
 
   * **`theme`** : Theme used by the gui; options are `dark`, `light`, `watermelon`. Default: `dark`.
 
-* **pilot_launch.py:** This launches the pilot gui.
+* **pilot_launch.py:** Launches the pilot gui, ex. `ros2 launch gui pilot_launch.py theme:=watermelon gui:=debug`
 
   * **`theme`** : Theme used by the gui; options are `dark`, `light`, `watermelon`. Default: `dark`.
+
+  * **`gui`** : Whether to use vertical or debug gui; options are `pilot`, `debug`. Default: `pilot`.
 
 ## Event Nodes
 

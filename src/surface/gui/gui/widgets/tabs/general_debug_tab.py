@@ -7,7 +7,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget
 
 
-class DebugWidget(QWidget):
+class GeneralDebugTab(QWidget):
     def __init__(self) -> None:
         super().__init__()
 

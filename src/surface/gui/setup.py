@@ -34,6 +34,7 @@ setup(
     entry_points={
         'console_scripts': ['run_pilot = gui.pilot_app:run_gui_pilot',
                             'run_operator = gui.operator_app:run_gui_operator',
+                            'run_debug = gui.debug_app:run_gui_debug',
                             'run_timer = gui.gui_nodes.auxiliary_nodes.timer:run_timer'],
     },
 )
