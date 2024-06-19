@@ -33,6 +33,7 @@ def generate_launch_description() -> LaunchDescription:
             ('/pi/mavros/rc/override', '/tether/mavros/rc/override'),
             ('/pi/mavros/cmd/arming', '/tether/mavros/cmd/arming'),
             ('/pi/mavros/cmd/command', '/tether/mavros/cmd/command'),
+            ('/pi/mavros/set_mode', '/tether/mavros/set_mode'),
         ]
     )
 

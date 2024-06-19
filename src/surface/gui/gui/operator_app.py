@@ -3,11 +3,13 @@ from gui.widgets.logger import Logger
 from gui.widgets.tabs.general_debug_tab import GeneralDebugTab
 from gui.widgets.float_comm import FloatComm
 from gui.widgets.timer import InteractiveTimer
-from gui.widgets.task_selector import TaskSelector
+# from gui.widgets.task_selector import TaskSelector
+from gui.widgets.arm import Arm
 from gui.widgets.flood_warning import FloodWarning
 from gui.widgets.temperature import TemperatureSensor
 from gui.widgets.heartbeat import HeartbeatWidget
 from gui.widgets.ip_widget import IPWidget
+from gui.widgets.depth_hold import DepthHold
 from PyQt6.QtWidgets import QTabWidget, QWidget, QVBoxLayout, QHBoxLayout
 
 
@@ -40,7 +42,9 @@ class OperatorApp(App):
         right_pane.addWidget(TemperatureSensor())
         right_pane.addWidget(IPWidget())
         right_pane.addStretch()
-        right_pane.addWidget(TaskSelector())
+        right_pane.addWidget(DepthHold())
+        right_pane.addWidget(Arm())
+        # right_pane.addWidget(TaskSelector())
 
         # Add tabs to root
         root_layout = QVBoxLayout()

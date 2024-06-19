@@ -18,6 +18,7 @@ class VehicleState():
     pi_connected: bool = False
     pixhawk_connected: bool = False
     armed: bool = False
+    depth_hold_enabled: bool = False
 
 
 class VehicleManagerNode(Node):
@@ -55,14 +56,16 @@ class VehicleManagerNode(Node):
             VehicleStateMsg(
                 pi_connected=state.pi_connected,
                 pixhawk_connected=state.pixhawk_connected,
-                armed=state.armed
+                armed=state.armed,
+                depth_hold_enabled=state.depth_hold_enabled,
             )
         )
 
     def mavros_callback(self, msg: State) -> None:
         new_state = VehicleState(pi_connected=True,
                                  pixhawk_connected=msg.connected,
-                                 armed=msg.armed)
+                                 armed=msg.armed,
+                                 depth_hold_enabled=msg.mode == "ALT_HOLD")
 
         if new_state != self.vehicle_state:
             self.publish_state(new_state)
@@ -79,6 +82,11 @@ class VehicleManagerNode(Node):
                 self.get_logger().info("Pixhawk disarmed")
             elif not self.vehicle_state.armed and new_state.armed:
                 self.get_logger().info("Pixhawk armed")
+
+            if self.vehicle_state.depth_hold_enabled and not new_state.depth_hold_enabled:
+                self.get_logger().info("Depth Hold Disabled")
+            elif not self.vehicle_state.depth_hold_enabled and new_state.depth_hold_enabled:
+                self.get_logger().info("Depth Hold Enabled")
 
             self.vehicle_state = new_state
 
